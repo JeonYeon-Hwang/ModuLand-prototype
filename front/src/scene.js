@@ -14,12 +14,43 @@ export function createScene(){
     renderer.setSize(gameWindow.offsetWidth, gameWindow.offsetHeight);
     gameWindow.appendChild(renderer.domElement);
 
-    /* 오브젝트 */
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({color: 0xff0000});
-    const mesh = new THREE.Mesh(geometry, material);
+    let meshes = [];
     
-    scene.add(mesh);
+    /* mesh를 채워넣는? 로직 */
+    function initialize(land){
+        scene.clear();
+        meshes = [];
+
+        for(let x = 0; x < land.size; x++){
+            const column = [];
+            for(let y = 0; y < land.size; y++){
+                /* 해당 좌표에 해당하는 mesh를 불러온다
+                   여기는 땅 */
+                scene.add(mesh);
+                column.push(mesh);
+            }
+            meshes.push(column);
+        }
+
+        setupLights();
+    }
+
+    /* 빛 설정 */
+    function setupLights(){
+        const lights = [
+            new THREE.AmbientLight(0xcffffff, 0.2),
+            new THREE.DirectionalLight(0xcffffff, 0.3),
+            new THREE.DirectionalLight(0xcffffff, 0.3),
+            new THREE.DirectionalLight(0xcffffff, 0.3),
+        ];
+
+        /* 광원 위치 설정 */
+        lights[1].position.set(0, 1, 0);
+        lights[1].position.set(1, 1, 0);
+        lights[1].position.set(0, 1, 1);
+
+        scene.add(...lights);
+    }
 
     function draw(){
         renderer.render(scene, camera.camera);
@@ -48,6 +79,7 @@ export function createScene(){
 
 
     return {
+        initialize,
         start,
         stop,
         onMouseDown,

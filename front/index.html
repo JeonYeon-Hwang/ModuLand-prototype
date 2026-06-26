@@ -18,15 +18,9 @@
     </div>
     
     <script type="module">
-        import { createScene } from './src/scene.js';
-
-        window.onload = () => {
-            window.scene = createScene();
-            document.addEventListener('mousedown', window.scene.onMouseDown, false);
-            document.addEventListener('mouseup', window.scene.onMouseUp, false);
-            document.addEventListener('mousemove', window.scene.onMouseMove, false);
-            window.scene.start();
-        }
+        import { createModeling } from './src/modeling.js';
+        
+        window.onload = () => createModeling();
     </script>
 </body>
 </html>
